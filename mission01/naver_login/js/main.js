@@ -48,5 +48,57 @@ function login(event) {
 loginBtn.addEventListener('click', login);
 
 
+/*
+ const emailInput = document.querySelector('#userEmail');
+ const pwInput = document.querySelector('#userPassword');
+ const loginButton = document.querySelector('.btn-login');
 
+ function handleCheckEmail(){
+  const value = this.value;
+  if(emailReg(value)){
+  this.classList.remove('is--invalid');
+  emailPass = true;
+ }else{
+  this.classList.add('is--invalid');
+  emailPass = false;
+ }
 
+ function handleCheckPw() {
+  const value = this.value;
+  if(pwReg(value)){
+    this.classList.remove('is--invalid');
+    pwPass = true;
+  }else{
+    this.classList.add('is--invalid');
+    pwPass = false;
+  }
+ }
+
+ function handleLogin(e){
+  e.preventDefault();
+  if(emailPass && pwPass){
+    const id = emailInput.value;
+    const pw = pwInput.value;
+
+    const getUserId = user.id;
+    const getUserPw = user.pw;
+
+    if(id === getUserId && pw === getUserPw){
+      console.log('로그인 성공!');
+    }else{
+      console.log('정확한 아이디와 비밀번호를 입력해 주세요.);
+    }catch(e){
+      alert(e.message);
+    }
+    
+    else{
+      console.log('정확한 아이디와 비밀번호를 입력해 주세요.');
+    }
+  }
+ }
+
+ emailInput.addEventListener('input', handleCheckEmail);
+ pwInput.addEventListener('input', handleCheckPw);
+ loginButton.addEventListener('click', hanleLogin);
+ 
+ */
