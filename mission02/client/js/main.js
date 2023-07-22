@@ -11,6 +11,7 @@ import { AudioPlayer } from './audio.js';
 */
 
 const nav = document.querySelector(".nav");
+const ul = nav.querySelector('ul');
 const visual = document.querySelector(".visual");
 const visualImg = visual.querySelector("img");
 const nickName = document.querySelector(".nickName");
@@ -27,87 +28,58 @@ function activeChange(li){
 }
 
 // 배경 색상 변경
-function colorChange(colors) {
-  const [color1, color2] = colors;
-  document.body.style.background = `linear-gradient(to top, ${color1}, ${color2})`;
+function setBgColor(colors) {
+  const [colorA, colorB="#000"] = colors;
+  document.body.style.background = `linear-gradient(to top, ${colorA}, ${colorB})`;
 }
 
 // 이미지 변경
-function imgChange(visualImgSrc, visualImgAlt) {
+function setImage(visualImgSrc, visualImgAlt) {
   visualImg.alt = visualImgAlt;
   visualImg.src = visualImgSrc;
 }
 
 // 이름 변경
-function nickNameChange(nickNameText) {
+function setNameText(nickNameText) {
   nickName.textContent = nickNameText;
 }
 
 // 목소리 변경
-function voiceChange(voice) {
+function setVoice(voice) {
   const audioPlayer = new AudioPlayer(voice);
   audioPlayer.play();
 }
 
-// nav 클릭 시 이벤트
 function handleClickEvent(event) {
-  if (event.target.tagName === "IMG") {
-    const button = event.target.closest("button");
-    const li = event.target.closest("li");
+  const clickedButton = event.target.closest("button");
 
-    activeChange(li);
+  if (clickedButton) {
+    const liElements = ul.querySelectorAll("li");
 
-    if (button) {
-      const dataIndex = button.parentNode.getAttribute("data-index");
-      if (dataIndex === "1") {
-        const colors = data[0].color;
-        const visualImgAlt = data[0].alt;
-        const visualImgSrc = "./assets/ember.jpeg";
-        const nickNameText = data[0].name;
-        const voice = "./assets/audio/ember.m4a";
+    liElements.forEach(li => {
+      if (clickedButton.parentNode === li) {
+        const dataIndex = li.getAttribute("data-index");
+        const dataIndexNumber = parseInt(dataIndex);
 
-        colorChange(colors);
-        imgChange(visualImgSrc, visualImgAlt);
-        nickNameChange(nickNameText);
-        voiceChange(voice);
-      } else if (dataIndex === "2") {
-        li.classList.add("is-active");
+        const dataArrayIndex = dataIndexNumber - 1;
+        const selectData = data[dataArrayIndex];
 
-        const colors = data[1].color;
-        const visualImgAlt = data[1].alt;
-        const visualImgSrc = "./assets/wade.jpeg";
-        const nickNameText = data[1].name;
-        const voice = "./assets/audio/wade.m4a";
+        if (selectData) {
+          activeChange(li);
 
-        colorChange(colors);
-        imgChange(visualImgSrc, visualImgAlt);
-        nickNameChange(nickNameText);
-        voiceChange(voice);
-      } else if (dataIndex === "3") {
-        const colors = data[2].color;
-        const visualImgAlt = data[2].alt;
-        const visualImgSrc = "./assets/clod.jpeg";
-        const nickNameText = data[2].name;
-        const voice = "./assets/audio/clod.m4a";
+          const colors = selectData.color;
+          const visualImgAlt = selectData.alt;
+          const visualImgSrc = `./assets/${selectData.name.toLowerCase()}.jpeg`;
+          const nickNameText = selectData.name;
+          const voice = `./assets/audio/${selectData.name.toLowerCase()}.m4a`;
 
-        colorChange(colors);
-        imgChange(visualImgSrc, visualImgAlt);
-        nickNameChange(nickNameText);
-        voiceChange(voice);
-      } else if (dataIndex === "4") {
-        const colors = data[3].color;
-        const visualImgAlt = data[3].alt;
-        const visualImgSrc = "./assets/gale.jpeg";
-        const nickNameText = data[3].name;
-        const voice = "./assets/audio/gale.m4a";
-
-        colorChange(colors);
-        imgChange(visualImgSrc, visualImgAlt);
-        nickNameChange(nickNameText);
-        voiceChange(voice);
+          setBgColor(colors);
+          setImage(visualImgSrc, visualImgAlt);
+          setNameText(nickNameText);
+          setVoice(voice);
+        }
       }
-    }
+    });
   }
 }
-
 nav.addEventListener("click", handleClickEvent);
